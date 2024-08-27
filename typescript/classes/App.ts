@@ -20,8 +20,8 @@ export default class App {
             this.whoHasWonOnGameOver();
             // ask if we should play again
             console.log("");
-            let playAgain = prompt("Vill ni spela igen? (ja/nej)? ");
-            if (playAgain.trim().toLowerCase() !== "ja") {
+            let playAgain = prompt("Do you want to play again? (yes/no)? ");
+            if (playAgain.trim().toLowerCase() !== "yes") {
                 break;
             }
         }
@@ -45,9 +45,9 @@ export default class App {
 
     createPlayers() {
         console.clear();
-        console.log("TIC-TAC-TOE\n");
-        this.playerX = new Player(prompt("Spelare X:s namn: "), "X");
-        this.playerO = new Player(prompt("Spelare O:s namn: "), "O");
+        console.log("CONNECT FOUR\n");
+        this.playerX = new Player(prompt("Player X:s name: "), "X");
+        this.playerO = new Player(prompt("Player O:s name: "), "O");
     }
 
 
@@ -62,7 +62,7 @@ export default class App {
                     ? this.playerX
                     : this.playerO;
             let move = prompt(
-                `Ange ditt drag ${player.color} ${player.name} - skriv in rad,kolumn: `
+                `It's your turn, ${player.color} ${player.name} - type in row,column: `
             );
             // convert row and columns to numbers and zero-based indexes
             let [row, column] = move.split(",").map((x: string) => +x.trim() - 1);
@@ -79,10 +79,10 @@ export default class App {
             let winningPlayer =
                 this.board.winner === "X" ? this.playerX : this.playerO;
             console.log(
-                `Grattis ${winningPlayer.color}: ${winningPlayer.name} du vann!`
+                `Congratulations ${winningPlayer.color}: ${winningPlayer.name} , you won!`
             );
         } else {
-            console.log("Tyvärr det blev oavgjort...");
+            console.log("Unfortunately it was a draw...");
         }
     }
 }
