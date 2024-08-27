@@ -6,6 +6,7 @@ export default class App {
     playerX!: Player;
     playerO!: Player;
     board: Board;
+    isPvE: boolean = false;
 
     constructor() {
         // // Initialize players and board
@@ -14,6 +15,7 @@ export default class App {
 
         // a while-loop that let us play the game repeatedly
         while (true) {
+            this.selectGameMode();
             this.createPlayers();
             this.board = new Board();
             this.startGameLoop();
@@ -43,11 +45,23 @@ export default class App {
     //     }
     // }
 
+    selectGameMode() {
+        console.clear();
+        console.log("CONNECT FOUR\n");
+        let gameMode = prompt("Choose game mode: Player vs Player (PvP) or Player vs Computer (PvE)? (pvp/pve): ").trim().toLowerCase();
+        this.isPvE = gameMode === "pve";
+    }
+
     createPlayers() {
         console.clear();
         console.log("CONNECT FOUR\n");
-        this.playerX = new Player(prompt("Player X:s name: "), "X");
-        this.playerO = new Player(prompt("Player O:s name: "), "O");
+        this.playerX = new Player(prompt("Player X's name: "), "X");
+
+        if (this.isPvE) {
+            this.playerO = new Player("Computer", "O");
+        } else {
+            this.playerO = new Player(prompt("Player O's name: "), "O");
+        }
     }
 
 
@@ -61,13 +75,23 @@ export default class App {
                 this.board.currentPlayerColor === "X"
                     ? this.playerX
                     : this.playerO;
-            let move = prompt(
-                `It's your turn, ${player.color} ${player.name} - type in row,column: `
-            );
-            // convert row and columns to numbers and zero-based indexes
-            let [row, column] = move.split(",").map((x: string) => +x.trim() - 1);
-            // try to make the move
-            this.board.makeMove(player.color, row, column);
+
+            if (this.isPvE && player.color === 'O') {
+                // Computer's turn
+                console.log("Computer is making a move...");
+                this.board.makeRandomMove(player.color);
+            } else {
+                // Player's turn
+                let move = prompt(
+                    `It's your turn, ${player.color} ${player.name} - type in row,column: `
+                );
+                // convert row and columns to numbers and zero-based indexes
+                let [row, column] = move.split(",").map((x: string) => +x.trim() - 1);
+                // try to make the move
+                this.board.makeMove(player.color, row, column);
+            }
+
+
         }
     }
 
