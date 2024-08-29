@@ -2,5 +2,6 @@
 
 ## Todo
 
-- PvE function.
-- Make so tokens can only be placed on the lowest free  place in each column.
+- PvE function - difficulty settings
+- ~~Make so tokens can only be placed on the lowest free  place in each column.~~
+
