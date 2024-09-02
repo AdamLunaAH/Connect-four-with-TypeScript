@@ -8,7 +8,10 @@ export default class App {
   playerO!: Player;
   board: Board;
   isPvE: boolean = false;
+  isEvE: boolean = false;
   difficulty: 'Easy' | 'Hard' = 'Easy'
+
+
 
   constructor() {
     //Initialize players, board and game mode
@@ -36,8 +39,15 @@ export default class App {
     console.clear();
     console.log("CONNECT FOUR\n");
     // Game mode selector
-    let gameMode = prompt("Choose game mode: Player vs Player (PvP) or Player vs Computer (PvE)? (pvp/pve): ").trim().toLowerCase();
-    this.isPvE = gameMode === "pve";  // Set the game mode based on user input
+    let gameMode = prompt("Choose game mode: Player vs Player (PvP), Player vs Computer (PvE), or Computer vs Computer (EvE)? (pvp/pve/eve): ").trim().toLowerCase();
+    this.isPvE = gameMode === "pve";  // Player vs Environment
+    this.isEvE = gameMode === "eve";  // Environment vs Environment
+
+    // If EvE or PvE mode, select difficulty
+    if (this.isPvE || this.isEvE) {
+      this.selectDifficulty();
+    }
+
   }
 
   selectDifficulty() {
@@ -51,11 +61,16 @@ export default class App {
     console.clear();
     console.log("CONNECT FOUR\n");
     // Create player X
-    this.playerX = new Player(prompt("Player X's name: "), "X");
+    if (this.isEvE) {
+      this.playerX = new Player("Computer X", "X");
+    } else {
+      this.playerX = new Player(prompt("Player X's name: "), "X");
+    }
+
 
     // Create player O as ether PvE player och PvP player
-    if (this.isPvE) {
-      this.playerO = new Player("Computer", "O");  // Creates a computer player for PvE mode
+    if (this.isPvE || this.isEvE) {
+      this.playerO = new Player("Computer", "O");  // Creates a computer player for PvE or EvE mode
     } else {
       this.playerO = new Player(prompt("Player O's name: "), "O");  // Creates a human player for PvP mode
     }
@@ -75,11 +90,11 @@ export default class App {
           ? this.playerX
           : this.playerO;
 
-      if (this.isPvE && player.color === 'O') {
-        // Computer's turn
+      if (this.isPvE && player.color === 'O' || this.isEvE) {
+        // Computer's turn in PvE or EvE modes
         console.log("Computer is making a move...");
         if (this.difficulty === 'Hard') {
-          console.log("Hard difficulty is not finished, sets difficulty to easy.");
+          // console.log("Hard difficulty is not finished, sets difficulty to easy.");
           this.board.makeHardMove(player.color);  // Hard difficulty
         } else {
           this.board.makeRandomMove(player.color);  // Easy difficulty

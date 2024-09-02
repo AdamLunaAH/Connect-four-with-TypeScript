@@ -87,23 +87,23 @@ export default class Board {
 
 
 
-  // Make a move to block player's winning move
+  // Make a move to block player's winning move or make a move to get a connect 4
   makeHardMove(color: 'X' | 'O'): void {
     if (this.gameOver) return;
 
     // Identify the opponent's color
     const opponentColor = color === 'X' ? 'O' : 'X';
 
-    // Loop through each column and simulate a move to check if the opponent can win
+    // Step 1: Block opponent's winning move
     for (let c = 0; c < this.matrix[0].length; c++) {
       for (let r = this.matrix.length - 1; r >= 0; r--) {
         if (this.matrix[r][c] === ' ') {
           // Simulate the opponent's move
           this.matrix[r][c] = opponentColor;
 
-          // Check if this move would result in a win for the opponent
+          // Check if the move would result in a win for the opponent
           if (this.winCheck() === opponentColor) {
-            // Block the opponent's win
+            // Blocking move
             this.matrix[r][c] = color;
             this.currentPlayerColor = color === 'X' ? 'O' : 'X';
             this.winner = this.winCheck();
@@ -112,16 +112,41 @@ export default class Board {
             return;
           }
 
-          // Undo the simulated move
+          // Reset the simulated move
           this.matrix[r][c] = ' ';
           break;
         }
       }
     }
 
-    // If no blocking move was found, make a random move
+    // Step 2: Try to create a Connect Four for the AI
+    for (let c = 0; c < this.matrix[0].length; c++) {
+      for (let r = this.matrix.length - 1; r >= 0; r--) {
+        if (this.matrix[r][c] === ' ') {
+          // Simulate the AI's move
+          this.matrix[r][c] = color;
+
+          // Check if the move would result in a win for the AI
+          if (this.winCheck() === color) {
+            // Winning move
+            this.currentPlayerColor = color === 'X' ? 'O' : 'X';
+            this.winner = this.winCheck();
+            this.isADraw = this.drawCheck();
+            this.gameOver = !!this.winner || this.isADraw;
+            return;
+          }
+
+          // Reset the simulated move
+          this.matrix[r][c] = ' ';
+          break;
+        }
+      }
+    }
+
+    // Step 3: If no blocking or winning move was found, make a random move
     this.makeRandomMove(color);
   }
+
 
 
   // Check if on of the players is the winner
