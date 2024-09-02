@@ -85,9 +85,9 @@ export default class Board {
     }
   }
 
-  // makeHardMove(color: 'X' | 'O'): void {
 
-  // Make a strategic move to block player's winning move
+
+  // Make a move to block player's winning move
   makeHardMove(color: 'X' | 'O'): void {
     if (this.gameOver) return;
 
@@ -114,7 +114,7 @@ export default class Board {
 
           // Undo the simulated move
           this.matrix[r][c] = ' ';
-          break; // Only check the lowest empty row in this column
+          break; 
         }
       }
     }
@@ -122,8 +122,8 @@ export default class Board {
     // If no blocking move was found, make a random move
     this.makeRandomMove(color);
   }
-  
-  // }
+
+
   // Check if on of the players is the winner
   winCheck(): 'X' | 'O' | false {
     let m = this.matrix;
