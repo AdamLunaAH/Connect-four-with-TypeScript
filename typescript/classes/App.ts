@@ -80,8 +80,8 @@ export default class App {
         console.log("Computer is making a move...");
         if (this.difficulty === 'Hard') {
           console.log("Hard difficulty is not finished, sets difficulty to easy.");
-          //this.board.makeHardMove(player.color);  // Hard difficulty
-          this.board.makeRandomMove(player.color);  // Easy difficulty
+          this.board.makeHardMove(player.color);  // Hard difficulty
+          // this.board.makeRandomMove(player.color);  // Easy difficulty
         } else {
           this.board.makeRandomMove(player.color);  // Easy difficulty
         }

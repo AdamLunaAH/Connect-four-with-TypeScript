@@ -87,6 +87,42 @@ export default class Board {
 
   // makeHardMove(color: 'X' | 'O'): void {
 
+  // Make a strategic move to block player's winning move
+  makeHardMove(color: 'X' | 'O'): void {
+    if (this.gameOver) return;
+
+    // Identify the opponent's color
+    const opponentColor = color === 'X' ? 'O' : 'X';
+
+    // Loop through each column and simulate a move to check if the opponent can win
+    for (let c = 0; c < this.matrix[0].length; c++) {
+      for (let r = this.matrix.length - 1; r >= 0; r--) {
+        if (this.matrix[r][c] === ' ') {
+          // Simulate the opponent's move
+          this.matrix[r][c] = opponentColor;
+
+          // Check if this move would result in a win for the opponent
+          if (this.winCheck() === opponentColor) {
+            // Block the opponent's win
+            this.matrix[r][c] = color;
+            this.currentPlayerColor = color === 'X' ? 'O' : 'X';
+            this.winner = this.winCheck();
+            this.isADraw = this.drawCheck();
+            this.gameOver = !!this.winner || this.isADraw;
+            return;
+          }
+
+          // Undo the simulated move
+          this.matrix[r][c] = ' ';
+          break; // Only check the lowest empty row in this column
+        }
+      }
+    }
+
+    // If no blocking move was found, make a random move
+    this.makeRandomMove(color);
+  }
+  
   // }
   // Check if on of the players is the winner
   winCheck(): 'X' | 'O' | false {
