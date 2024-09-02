@@ -72,10 +72,10 @@ export default class Board {
     if (this.gameOver) return;
 
     let availableMoves: number[] = [];
-      for (let c = 0; c < this.matrix[0].length; c++) {
-        if (this.matrix[0][c] === ' ') {
-          availableMoves.push(c);
-        }
+    for (let c = 0; c < this.matrix[0].length; c++) {
+      if (this.matrix[0][c] === ' ') {
+        availableMoves.push(c);
+      }
 
     }
 
@@ -114,7 +114,7 @@ export default class Board {
 
           // Undo the simulated move
           this.matrix[r][c] = ' ';
-          break; 
+          break;
         }
       }
     }
