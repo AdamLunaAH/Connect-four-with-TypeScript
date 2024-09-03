@@ -88,6 +88,7 @@ export default class Board {
 
 
   // Make a move to block player's winning move or make a move to get a connect 4
+  // Info: r = board row, c = board   column
   makeHardMove(color: 'X' | 'O'): void {
     if (this.gameOver) return;
 
