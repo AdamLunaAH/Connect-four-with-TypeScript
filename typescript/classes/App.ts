@@ -50,7 +50,7 @@ export default class App {
     console.log("Info!");
     console.log("Input is case-insensitive.\n");
     let startOption = prompt("Choose an option: Play (p or press Enter), or Quit (q): ").trim().toLowerCase();
-    // If the user presses Enter (empty input), treat it as 'p' for Play
+    // If the user presses Enter (empty input), it behaves as if the player pressed 'p' for Play
     if (startOption === '') {
       startOption = 'p';
     }
