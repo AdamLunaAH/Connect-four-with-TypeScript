@@ -61,7 +61,6 @@ export default class Board {
         return true;
       }
     }
-    console.log("Column is full. Try a different column.");
     return false;
 
 
