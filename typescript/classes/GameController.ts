@@ -38,8 +38,10 @@ export default class GameController {
         console.log("Computer is making a move...");
         if (this.difficulty === 'Hard') {
           this.board.makeHardMove(player.color);
+          this.score.updateMoves(player.color);
         } else {
           this.board.makeRandomMove(player.color);
+          this.score.updateMoves(player.color);
         }
       }
       // Human move

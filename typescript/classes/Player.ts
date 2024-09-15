@@ -1,4 +1,3 @@
-// Player.ts
 export default class Player {
 
   name: string;  // Player's name
