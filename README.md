@@ -1,5 +1,10 @@
 # Connect four game with TypeScript.
 
+## Things that could be further added and changed but wont be done in time
+- Pick/randomise which player starts move first.
+- Select difficulty each computer has in Computer vs Computer game mode.
+
+
 ## Todo
 
 - ~~PvE function - difficulty settings~~
