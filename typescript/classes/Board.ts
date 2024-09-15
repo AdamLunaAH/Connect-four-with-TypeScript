@@ -1,4 +1,3 @@
-// Board.ts
 export default class Board {
 
   matrix: string[][];
