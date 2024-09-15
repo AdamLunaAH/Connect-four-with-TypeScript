@@ -68,6 +68,8 @@ export default class Board {
 
   // Make a random move for the specified player (computer player)
   makeRandomMove(color: 'X' | 'O'): void {
+    this.computerPause();
+
     if (this.gameOver) return;
 
     let availableMoves: number[] = [];
@@ -89,6 +91,8 @@ export default class Board {
   // Make a move to block player's winning move or make a move to get a connect 4
   // Info: r = board row, c = board   column
   makeHardMove(color: 'X' | 'O'): void {
+    this.computerPause();
+
     if (this.gameOver) return;
 
     // Identify the opponent's color
@@ -135,7 +139,6 @@ export default class Board {
             this.gameOver = !!this.winner || this.isADraw;
             return;
           }
-
           // Reset the simulated move
           this.matrix[r][c] = ' ';
           break;
@@ -185,6 +188,13 @@ export default class Board {
       }
     }
     return false;
+  }
+
+  // Adds a pause to computer moves so it is not instant
+  computerPause() {
+    const pauseDuration = 750;
+    const startTime = Date.now();
+    while (Date.now() - startTime < pauseDuration) { }
   }
 
   // Check if the game has ended in a draw
